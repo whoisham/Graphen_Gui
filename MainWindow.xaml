@@ -5,8 +5,62 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Graphen_gui"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Graphen berechnen" Height="500" Width="1000" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
         
-    </Grid>
+        <DataTemplate x:Key="Adjazenz_Level2"/>
+        <DataTemplate x:Key="Adjazenz_Level1">
+            <ItemsControl ItemsSource="{Binding}" ItemTemplate="{DynamicResource Adjazenz_Level2}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </DataTemplate>
+
+        <DataTemplate x:Key="Weg_Level2">
+           
+        </DataTemplate>
+        <DataTemplate x:Key="Weg_Level1">
+            <ItemsControl ItemsSource="{Binding}" ItemTemplate="{DynamicResource Weg_Level2}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </DataTemplate>
+
+        <DataTemplate x:Key="Distanz_Level2" />
+        <DataTemplate x:Key="Distanz_Level1">
+            <ItemsControl ItemsSource="{Binding}" ItemTemplate="{DynamicResource Distanz_Level2}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </DataTemplate>
+
+
+    </Window.Resources>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Left" Width="200">
+            <Grid>
+                <ItemsControl x:Name="Adjazenz" ItemTemplate="{DynamicResource Adjazenz_Level1}"/>
+            </Grid>
+        </StackPanel>
+        <StackPanel DockPanel.Dock="Left" Width="200">
+            <Grid>
+                <ItemsControl x:Name="Weg" ItemTemplate="{DynamicResource Weg_Level1}"/>
+            </Grid>
+            <Grid>
+                <ItemsControl x:Name="Distanz" ItemTemplate="{DynamicResource Distanz_Level1}"/>
+            </Grid>
+        </StackPanel>
+        <Canvas DockPanel.Dock="Right">
+            
+        </Canvas>
+    </DockPanel>
 </Window>
