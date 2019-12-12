@@ -46,12 +46,12 @@
 
     </Window.Resources>
     <DockPanel>
-        <StackPanel DockPanel.Dock="Left" Width="200">
+        <StackPanel DockPanel.Dock="Left">
             <Grid>
                 <ItemsControl x:Name="Adjazenz" ItemTemplate="{DynamicResource Adjazenz_Level1}"/>
             </Grid>
         </StackPanel>
-        <StackPanel DockPanel.Dock="Left" Width="200">
+        <StackPanel DockPanel.Dock="Left">
             <Grid>
                 <ItemsControl x:Name="Weg" ItemTemplate="{DynamicResource Weg_Level1}"/>
             </Grid>

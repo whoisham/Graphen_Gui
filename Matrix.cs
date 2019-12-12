@@ -216,7 +216,7 @@ namespace Graphen_gui
                                     }
                                     else
                                     {
-                                        Wegmatrix[x, y] = -1;
+                                        Wegmatrix[x, y] = 0;
                                     }
                                 }
                                 else
@@ -234,7 +234,7 @@ namespace Graphen_gui
                     {
                         for (int y = 0; y < Wegmatrix.GetLength(0); y++)
                         {
-                            if (Wegmatrix[x, y] == -1)
+                            if (Wegmatrix[x, y] == 0)
                             {
                                 check++;
                             }

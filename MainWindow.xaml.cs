@@ -67,14 +67,39 @@ namespace Graphen_gui
                         Width = 30,
                         Height = 30,
                         Background = Brushes.Gray,
-                        TextAlignment = TextAlignment.Center
-                        
+                        TextAlignment = TextAlignment.Center,
+                        Margin = new Thickness(1, 1, 1, 1)
+
                     };
                     txt.Text = mat[i, j].ToString();
                     lsts[i].Add(txt);
                 }
             }
             Weg.ItemsSource = lsts;
+        }
+
+        private void addDistanzMatrixFelder(int[,] mat)
+        {
+            List<List<TextBlock>> lsts = new List<List<TextBlock>>();
+            for (int i = 0; i < mat.GetLength(0); i++)
+            {
+                lsts.Add(new List<TextBlock>());
+
+                for (int j = 0; j < mat.GetLength(1); j++)
+                {
+                    TextBlock txt = new TextBlock
+                    {
+                        Width = 30,
+                        Height = 30,
+                        Background = Brushes.Gray,
+                        TextAlignment = TextAlignment.Center,
+                        Margin = new Thickness(1,1,1,1)
+                    };
+                    txt.Text = mat[i, j].ToString();
+                    lsts[i].Add(txt);
+                }
+            }
+            Distanz.ItemsSource = lsts;
         }
 
         private void button_Click(object sender, EventArgs e)
@@ -111,6 +136,8 @@ namespace Graphen_gui
             addMatrixButtons(matrixen.Adjazenzmatrix);
             matrixen.Wegmatrixzeichnung(matrixen.Adjazenzmatrix);
             addWegMatrixFelder(matrixen.Wegmatrix);
+            matrixen.Distanzmatrixzeichnung(matrixen.Adjazenzmatrix);
+            addDistanzMatrixFelder(matrixen.Wegmatrix);
         }
     }
 
