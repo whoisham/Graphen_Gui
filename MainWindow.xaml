@@ -57,25 +57,28 @@
                 <RowDefinition Height=" auto"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-
-            <ItemsControl Grid.Column="0" Grid.Row="0" x:Name="Adjazenz" ItemTemplate="{DynamicResource Adjazenz_Level1}"/>
-            <StackPanel Grid.Column="0" Grid.Row="1">
+            <StackPanel>
+                <TextBlock>Matrix</TextBlock>
+                <ItemsControl Grid.Column="0" Grid.Row="1" x:Name="Adjazenz" ItemTemplate="{DynamicResource Adjazenz_Level1}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="0" Grid.Row="2">
                 <TextBlock x:Name="textDurchmesser"></TextBlock>
                 <TextBlock x:Name="textRadius"></TextBlock>
                 <TextBlock x:Name="textKomponente"></TextBlock>
             </StackPanel>
-        
 
 
-            <ItemsControl Grid.Column="2" Grid.Row="0" x:Name="Weg" ItemTemplate="{DynamicResource Weg_Level1}" Margin="0 0 0 10"/>
-            <ItemsControl Grid.Column="2" Grid.Row="1" x:Name="Distanz" ItemTemplate="{DynamicResource Distanz_Level1}"/>
-            <Canvas Grid.Column="3" Grid.RowSpan="3" Background="Gray">
-                <Ellipse  Width="100"
-                          Height="50"
-                          Fill="Blue"
-                          Stroke="Black"
-                          StrokeThickness="4"/>
-            </Canvas>
+            <StackPanel Grid.Column="2" Grid.Row="0">
+                <TextBlock>Weg Matrix</TextBlock>
+                <ItemsControl  x:Name="Weg" ItemTemplate="{DynamicResource Weg_Level1}" Margin="0 0 0 10"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="2" Grid.Row="1">
+                <TextBlock>Distanz Matrix</TextBlock>
+                <ItemsControl x:Name="Distanz" ItemTemplate="{DynamicResource Distanz_Level1}"/>
+            </StackPanel>
+            <Canvas Grid.Column="3" Grid.RowSpan="3" Background="Gray" x:Name="ZeichenFlaeche"/>
+
         </Grid>
     </DockPanel>
 </Window>

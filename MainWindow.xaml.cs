@@ -107,18 +107,69 @@ namespace Graphen_gui
         {
             Button button = sender as Button;
             int[] tg = button.Tag as int[];
+
+            double x1 = 0.0;
+            double x2 = 0.0;
+            double y1 = 0.0;
+            double y2 = 0.0; 
+
+            foreach (UIElement uielem in ZeichenFlaeche.Children)
+            {
+                var item = uielem as Ellipse;
+                if (item != null)
+                {
+                    if ((int)item.Tag == tg[0])
+                    {
+                        x1 = Canvas.GetLeft(item)+15;
+                        y1 = Canvas.GetTop(item)+15;
+                    }
+                    if ((int)item.Tag == tg[1])
+                    {
+                        x2 = Canvas.GetLeft(item)+15;
+                        y2 = Canvas.GetTop(item)+15;
+                    }
+                }
+            }
             if (button.Content.ToString() == "0")
             {
                 button.Content = 1;
+                Line myLine = new Line();
+                myLine.Stroke = System.Windows.Media.Brushes.LightSteelBlue;
+                myLine.X1 = x1;
+                myLine.X2 = x2;
+                myLine.Y1 = y1;
+                myLine.Y2 = y2;
+                myLine.Tag = "" + tg[0] + tg[1];
+                myLine.HorizontalAlignment = HorizontalAlignment.Left;
+                myLine.VerticalAlignment = VerticalAlignment.Center;
+                myLine.StrokeThickness = 4;
+                Canvas.SetZIndex(myLine, 0);
 
                 matrixen.Adjazenzmatrix[tg[0], tg[1]] = 1;
                 matrixen.Adjazenzmatrix[tg[1], tg[0]] = 1;
+                ZeichenFlaeche.Children.Add(myLine);
             }
             else
             {
+                Line remove = null;
+                var ob = ZeichenFlaeche.Children;
+                foreach (UIElement element in ob)
+                {
+                    var item = element as Line;
+                    if (item != null)
+                    {
+                        if (item.Tag.Equals("" + tg[0] + tg[1]))
+                        {
+                            remove = item;
+                        }
+                    }
+                }
+
+                ZeichenFlaeche.Children.Remove(remove);
                 button.Content = 0;
                 matrixen.Adjazenzmatrix[tg[0], tg[1]] = 0;
                 matrixen.Adjazenzmatrix[tg[1], tg[0]] = 0;
+                
             }
             updateView();
         }
@@ -126,10 +177,12 @@ namespace Graphen_gui
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             WindowDialog wd = new WindowDialog();
+            this.Hide();
             wd.ShowDialog();
             matrixen = new Matrix((int)wd.slider.Value);
-
+            this.Show();
             updateView();
+            zeichneGraphen();
         }
         private void updateData()
         {
@@ -147,6 +200,7 @@ namespace Graphen_gui
             textDurchmesser.Text = "Durchmesser: " + matrixen.DurchmesserBerechnung();
             textRadius.Text = "Radius: " + matrixen.RadiusBerechnung();
             textKomponente.Text = "Anzahl Komponente: " + KomponenteToText();
+            
         }
         private String KomponenteToText()
         {
@@ -164,11 +218,38 @@ namespace Graphen_gui
                 }
                 komp += "\n";
             }
-
-
-
-
             return komp;
+        }
+
+
+
+        private void zeichneGraphen()
+        {
+            ZeichenFlaeche.Children.Clear();
+            Random rnd = new Random();
+
+            for (int i = 0; i < matrixen.Adjazenzmatrix.GetLength(1); i++)
+            {
+                Ellipse myEllipse = new Ellipse();
+                myEllipse.Tag=i;
+                SolidColorBrush mySolidColorBrush = new SolidColorBrush();
+
+                // Describes the brush's color using RGB values. 
+                // Each value has a range of 0-255.
+                mySolidColorBrush.Color = Color.FromArgb(255, 255, 255, 0);
+                myEllipse.Fill = mySolidColorBrush;
+                myEllipse.StrokeThickness = 2;
+                myEllipse.Stroke = Brushes.Black;
+
+                // Set the width and height of the Ellipse.
+                myEllipse.Width = 30;
+                myEllipse.Height = 30;
+                Canvas.SetZIndex(myEllipse, 1);
+                Canvas.SetLeft(myEllipse, rnd.Next(1, 20) * 20);
+                Canvas.SetTop(myEllipse, rnd.Next(1, 20) * 20);
+                ZeichenFlaeche.Children.Add(myEllipse);
+            }
+
         }
     }
 
