@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace Graphen_gui
         private int[,] wegmatrix;
 
 
+
         public Matrix(int a)
         {
             erstellenAdjazenzMatrix(a);
@@ -24,7 +26,6 @@ namespace Graphen_gui
         public int[,] Potenzmatrix { get => potenzmatrix; set => potenzmatrix = value; }
         public int[,] Distanzmatrix { get => distanzmatrix; set => distanzmatrix = value; }
         public int[,] Wegmatrix { get => wegmatrix; set => wegmatrix = value; }
-
 
         // basis adjazenz Matrix muss erstellt werden
         public void erstellenAdjazenzMatrix(int knotenanzahl)
@@ -249,5 +250,101 @@ namespace Graphen_gui
             }
             return Wegmatrix;
         }
+
+        public int ExtenzitaetBerechnungEineZeile(int zeile)
+        {
+            int exzentrizitaet = 0;
+            for (int i = 0; i < Distanzmatrix.GetLength(0); i++)
+            {
+                if (Distanzmatrix[zeile, i] > exzentrizitaet )
+                {
+                    exzentrizitaet = Distanzmatrix[zeile, i];
+                }
+                
+            }
+            return exzentrizitaet;
+        }
+        public int DurchmesserBerechnung()
+        {
+            int durchmesser = 0;
+            for (int i = 0; i < Distanzmatrix.GetLength(0); i++)
+            {
+                var erg = ExtenzitaetBerechnungEineZeile(i);
+                if (erg > durchmesser)
+                {
+                    durchmesser = erg;
+                }
+            }
+            return durchmesser;
+        }
+
+        public int RadiusBerechnung()
+        {
+            int radius = 99999;
+            for (int i = 0; i < Distanzmatrix.GetLength(0); i++)
+            {
+                var erg = ExtenzitaetBerechnungEineZeile(i);
+                if (erg < radius)
+                {
+                    radius = erg;
+                }
+            }
+            return radius;
+        }
+
+        public ArrayList KomponentenAnzahl()
+        {
+            ArrayList komponente = new ArrayList();
+            ArrayList komp;
+            //SortedList<int,SortedList<int,int>> komponente  = new SortedList<int, SortedList<int, int>>
+            
+
+            for (int i = 0; i < Wegmatrix.GetLength(0); i++)
+            {
+                bool cont = false;
+                foreach (ArrayList item in komponente)
+                {
+                    if (item.Contains(i))
+                    {
+                        cont = true;
+                    }
+                }
+                if (cont)
+                {
+                    continue;
+                }
+                komp = new ArrayList();
+                if(!komp.Contains(i))
+                {
+                    komp.Add(i);
+                    for (int x = 0; x < Wegmatrix.GetLength(0); x++)
+                    {
+                        if(x != i)
+                        {
+                            if(Wegmatrix[i,x] >0)
+                            {
+                                if (!komp.Contains(x))
+                                {
+                                    komp.Add(x);
+                                }
+
+                                
+                            }
+                            if (Wegmatrix[i, x] > 0)
+                            {
+                                if (!komp.Contains(x))
+                                {
+                                    komp.Add(x);
+                                }
+                            }
+
+                        }
+                    }
+                    komponente.Add(komp);
+                }
+            }
+            return komponente;
+        }
+
     }
 }

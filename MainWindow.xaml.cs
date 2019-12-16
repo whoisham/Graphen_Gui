@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -93,7 +94,7 @@ namespace Graphen_gui
                         Height = 30,
                         Background = Brushes.Gray,
                         TextAlignment = TextAlignment.Center,
-                        Margin = new Thickness(1,1,1,1)
+                        Margin = new Thickness(1, 1, 1, 1)
                     };
                     txt.Text = mat[i, j].ToString();
                     lsts[i].Add(txt);
@@ -127,17 +128,47 @@ namespace Graphen_gui
             WindowDialog wd = new WindowDialog();
             wd.ShowDialog();
             matrixen = new Matrix((int)wd.slider.Value);
-            
+
             updateView();
         }
-
+        private void updateData()
+        {
+        
+            matrixen.Wegmatrixzeichnung(matrixen.Adjazenzmatrix);
+            matrixen.Distanzmatrixzeichnung(matrixen.Adjazenzmatrix);
+            
+        }
         private void updateView()
         {
             addMatrixButtons(matrixen.Adjazenzmatrix);
-            matrixen.Wegmatrixzeichnung(matrixen.Adjazenzmatrix);
+            updateData();
             addWegMatrixFelder(matrixen.Wegmatrix);
-            matrixen.Distanzmatrixzeichnung(matrixen.Adjazenzmatrix);
-            addDistanzMatrixFelder(matrixen.Wegmatrix);
+            addDistanzMatrixFelder(matrixen.Distanzmatrix);
+            textDurchmesser.Text = "Durchmesser: " + matrixen.DurchmesserBerechnung();
+            textRadius.Text = "Radius: " + matrixen.RadiusBerechnung();
+            textKomponente.Text = "Anzahl Komponente: " + KomponenteToText();
+        }
+        private String KomponenteToText()
+        {
+            String komp = matrixen.KomponentenAnzahl().Count+"\n";
+
+            for (int i = 0; i < matrixen.KomponentenAnzahl().Count; i++)
+            {
+                ArrayList komponente = matrixen.KomponentenAnzahl();
+                ArrayList unterKomponente = (ArrayList) komponente[i];
+
+                for (int x = 0; x < unterKomponente.Count; x++)
+                {
+                    int d =(int) unterKomponente[x] + 1;
+                    komp += d + " ";
+                }
+                komp += "\n";
+            }
+
+
+
+
+            return komp;
         }
     }
 
