@@ -23,8 +23,6 @@ namespace Graphen_gui
     {
 
         Matrix matrixen;
-
-
         public MainWindow()
         {
             InitializeComponent();
@@ -246,12 +244,54 @@ namespace Graphen_gui
                 // Set the width and height of the Ellipse.
                 myEllipse.Width = 30;
                 myEllipse.Height = 30;
+                myEllipse.MouseDown += new MouseButtonEventHandler(xMouseDown);
+                myEllipse.MouseMove += new MouseEventHandler(xMouseMove);
+                myEllipse.MouseUp += new MouseButtonEventHandler(xMouseUp);
                 Canvas.SetZIndex(myEllipse, 1);
                 Canvas.SetLeft(myEllipse, rnd.Next(1, 20) * 20);
                 Canvas.SetTop(myEllipse, rnd.Next(1, 20) * 20);
                 ZeichenFlaeche.Children.Add(myEllipse);
             }
 
+        }
+        bool moving;
+        Ellipse pressedEllipse;
+
+        private void xMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            moving = true;
+            pressedEllipse = sender as Ellipse;
+            pressedEllipse.CaptureMouse();
+        }
+
+        private void xMouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton != MouseButtonState.Pressed)
+            {
+                moving = false;
+            }
+            if (moving == true)
+            {
+                double x = e.GetPosition(ZeichenFlaeche).X - 15;
+                double y = e.GetPosition(ZeichenFlaeche).Y - 15;
+                
+                if(x < 0 )
+                x = 0; 
+                if(y < 0 )
+                y = 0;
+                if (x >= ZeichenFlaeche.ActualWidth)
+                    x = ZeichenFlaeche.ActualWidth-30;
+                if (y >= ZeichenFlaeche.Height)
+                    y = ZeichenFlaeche.Height-30;
+                
+                Canvas.SetLeft(pressedEllipse, x);
+                Canvas.SetTop(pressedEllipse,y);
+            }
+        }
+        private void xMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            moving = false;
+            pressedEllipse.ReleaseMouseCapture();
         }
 
     }
