@@ -23,6 +23,8 @@ namespace Graphen_gui
     {
 
         Matrix matrixen;
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -251,6 +253,7 @@ namespace Graphen_gui
             }
 
         }
+
     }
 
 
