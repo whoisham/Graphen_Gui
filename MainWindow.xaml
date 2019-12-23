@@ -61,7 +61,7 @@
                 <TextBlock>Matrix</TextBlock>
                 <ItemsControl Grid.Column="0" Grid.Row="1" x:Name="Adjazenz" ItemTemplate="{DynamicResource Adjazenz_Level1}"/>
             </StackPanel>
-            <StackPanel Grid.Column="0" Grid.Row="2">
+            <StackPanel Grid.Column="0" Grid.Row="1">
                 <TextBlock x:Name="textDurchmesser"></TextBlock>
                 <TextBlock x:Name="textRadius"></TextBlock>
                 <TextBlock x:Name="textKomponente"></TextBlock>

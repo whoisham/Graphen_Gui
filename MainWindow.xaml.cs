@@ -283,7 +283,31 @@ namespace Graphen_gui
                     x = ZeichenFlaeche.ActualWidth-30;
                 if (y >= ZeichenFlaeche.Height)
                     y = ZeichenFlaeche.Height-30;
-                
+
+
+                string eltag = pressedEllipse.Tag.ToString();
+                var ob = ZeichenFlaeche.Children;
+
+                foreach (UIElement element in ob)
+                {
+                    var item = element as Line;
+                    if (item != null)
+                    {
+                        if(item.Tag.ToString().StartsWith(eltag))
+                        {
+                            item.X1 = x+15;
+                            item.Y1 = y+15;
+                        }
+                        if(item.Tag.ToString().EndsWith(eltag))
+                        {
+                            item.X2 = x+15;
+                            item.Y2 = y+15;
+                        }
+                    }
+                }
+
+
+
                 Canvas.SetLeft(pressedEllipse, x);
                 Canvas.SetTop(pressedEllipse,y);
             }
