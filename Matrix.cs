@@ -11,7 +11,7 @@ namespace Graphen_gui
     {
 
         private int[,] adjazenzmatrix;
-        private int[,] potenzmatrix; // eigentlich unnötig, aber wurde anfänglich programmiert.
+        private int[,] potenzmatrix;
         private int[,] distanzmatrix;
         private int[,] wegmatrix;
 
