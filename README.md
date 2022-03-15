@@ -2,4 +2,4 @@
 C# WPF project with a GUI
 
 
-Simple graph theory program with a gui. 
+graph theory program with a gui. 
